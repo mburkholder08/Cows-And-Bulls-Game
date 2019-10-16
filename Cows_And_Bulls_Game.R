@@ -6,15 +6,29 @@ bulls_and_cows <- function() {
   }
   
   get_guess <- function() {
+    user_choice_is_good <- FALSE
     
+    h <- 0
+    
+    while (user_choice_is_good==FALSE){
+      
     if (i == i) {                                                             #tells user how many guesses remain
       print(paste("You have", 11 - i, "guesses remaining."))
     }
     numbers_string <- readline("Please enter four numbers >")           
     user_choice <- as.integer(unlist(strsplit(numbers_string," ")))           #inputs the user vector
     
+    user_choice_is_good <- TRUE
+    
+    if (length(user_choice) > length(unique(user_choice))) {
+      message("Incorrect input. Please only use a number once.")              #check to make sure the user input is not repeated
+      h <- h + 1
+      user_choice_is_good <-FALSE
+      
+    }
     
     return(user_choice)
+    }
   }
   
   number_bulls <- function(user_choice,computer_sample){
