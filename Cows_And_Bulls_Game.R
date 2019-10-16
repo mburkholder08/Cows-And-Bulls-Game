@@ -1,0 +1,92 @@
+bulls_and_cows <- function() {
+  
+  generate_computer_vector <- function() {                                   #generates computer vector
+    computer_sample <- sample(0:9,4)
+    return(computer_sample)
+  }
+  
+  get_guess <- function() {
+    
+    if (i == i) {                                                             #tells user how many guesses remain
+      print(paste("You have", 11 - i, "guesses remaining."))
+    }
+    numbers_string <- readline("Please enter four numbers >")           
+    user_choice <- as.integer(unlist(strsplit(numbers_string," ")))           #inputs the user vector
+    
+    
+    return(user_choice)
+  }
+  
+  number_bulls <- function(user_choice,computer_sample){
+    bulls <- sum(user_choice == computer_sample)                              #calculates number of bulls
+    return (bulls)
+  }
+  
+  number_cows <- function(user_choice,computer_sample,test_bulls) {
+    cows <- sum(user_choice %in% computer_sample) - test_bulls                #calculates number of cows
+    return (cows)
+  }
+  
+  
+  number_bulls_and_cows <- function(user_choice_inside,computer_sample_inside) {
+    
+    bulls <- number_bulls(user_choice_inside, computer_sample_inside)
+    
+    cows <- number_cows(user_choice_inside,computer_sample_inside,bulls)
+    
+    return(c(bulls,cows))
+  }
+  
+  do_response <- function(user_choice_outside,computer_sample) {
+    
+    k <- 0
+    while (k < 5) {
+      if (get_bulls_and_cows[1] == k) {
+        print(paste("There are ", k, "bulls."))                                  #returns the amount of bulls
+      }
+      k <- k + 1
+    }
+    
+    
+    j <- 0
+    while (j < 5) {
+      if (get_bulls_and_cows[2] == j) {
+        print(paste("There are ", j, "cows."))                                  #returns the amount of cows
+      }
+      j <- j + 1
+    }
+    
+    
+    if (i == 10 && user_choice_outside != computer_sample) {
+      print("You are out of guesses! The game is over.")                        #ends the game when the user is out of guesses
+      cat("The correct answer was:",computer_sample)
+    }
+    
+    if(user_choice_outside[1] == computer_sample[1] && user_choice_outside[2] == computer_sample[2] && user_choice_outside[3] == computer_sample[3] && user_choice_outside[4] == computer_sample[4]) {
+      print(paste("It took you", i, "guesses to win this game."))
+    }
+    
+  }
+  
+  
+  ### Stuff happens below here
+  
+  i <- 1
+  
+  computer_sample <- generate_computer_vector()
+  
+  while (i < 11) {
+    user_choice_outside <- get_guess()
+    get_bulls_and_cows <- number_bulls_and_cows(user_choice_outside,computer_sample)
+    get_response <- do_response(user_choice_outside,computer_sample)
+    
+    i <- i + 1
+    
+    if (get_bulls_and_cows[1] == 4) {
+      break
+    }
+  }
+  
+}
+
+
