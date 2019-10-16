@@ -1,7 +1,7 @@
-bulls_and_cows <- function() {
+bulls_and_cows <-function() {
   
-  generate_computer_vector <- function() {                                   #generates computer vector
-    computer_sample <- sample(0:9,4)
+  generate_computer_vector <- function() {
+    computer_sample <- sample(0:9,4)                                      #generates computer vector
     return(computer_sample)
   }
   
@@ -12,32 +12,50 @@ bulls_and_cows <- function() {
     
     while (user_choice_is_good==FALSE){
       
-    if (i == i) {                                                             #tells user how many guesses remain
-      print(paste("You have", 11 - i, "guesses remaining."))
-    }
-    numbers_string <- readline("Please enter four numbers >")           
-    user_choice <- as.integer(unlist(strsplit(numbers_string," ")))           #inputs the user vector
-    
-    user_choice_is_good <- TRUE
-    
-    if (length(user_choice) > length(unique(user_choice))) {
-      message("Incorrect input. Please only use a number once.")              #check to make sure the user input is not repeated
-      h <- h + 1
-      user_choice_is_good <-FALSE
+      if (i == i) {
+        print(paste("You have", 11 - i, "guesses remaining."))
+      }
+      numbers_string <- readline("Please enter four numbers >")           #prompts user to make a guess
+      user_choice <- as.integer(unlist(strsplit(numbers_string," ")))
       
+      user_choice_is_good <- TRUE
+      
+      
+      if (length(user_choice) > length(unique(user_choice))) {
+        message("Incorrect input. Please only use a number once.")      #check to make sure there are no repeated numbers
+        h <- h + 1
+        user_choice_is_good <-FALSE
+        
+      }
+      if (any(is.na(user_choice)) || any(user_choice < 0) || any(user_choice > 9)) {
+        message("Incorrect input. Please enter integer values between 0 and 9.")           #check to make sure the value is numeric between 0 and 9 inclusive
+        h <- h + 1
+        user_choice_is_good <-FALSE
+        
+      }
+      
+      if (!length(user_choice) == 4) {
+        message("Incorrect input. Please enter four integer values.")                       #check to make sure 4 numbers are input
+        h <- h + 1
+        user_choice_is_good <- FALSE
+        
+      }
+      if(h == 3) {
+        stop("Error. You have made 3 mistakes in a row. The game is over.")                 #ends the game after 3 consecutive mistakes
+      }
     }
+    
     
     return(user_choice)
-    }
   }
   
   number_bulls <- function(user_choice,computer_sample){
-    bulls <- sum(user_choice == computer_sample)                              #calculates number of bulls
+    bulls <- sum(user_choice == computer_sample)                                             #calculates bulls
     return (bulls)
   }
   
   number_cows <- function(user_choice,computer_sample,test_bulls) {
-    cows <- sum(user_choice %in% computer_sample) - test_bulls                #calculates number of cows
+    cows <- sum(user_choice %in% computer_sample) - test_bulls                               #calculates cows
     return (cows)
   }
   
@@ -55,8 +73,8 @@ bulls_and_cows <- function() {
     
     k <- 0
     while (k < 5) {
-      if (get_bulls_and_cows[1] == k) {
-        print(paste("There are ", k, "bulls."))                                  #returns the amount of bulls
+      if (get_bulls_and_cows[1] == k) {                                              #prints number of bulls
+        print(paste("There are ", k, "bulls."))
       }
       k <- k + 1
     }
@@ -65,14 +83,14 @@ bulls_and_cows <- function() {
     j <- 0
     while (j < 5) {
       if (get_bulls_and_cows[2] == j) {
-        print(paste("There are ", j, "cows."))                                  #returns the amount of cows
+        print(paste("There are ", j, "cows."))                                         #prints number of cows
       }
       j <- j + 1
     }
     
     
     if (i == 10 && user_choice_outside != computer_sample) {
-      print("You are out of guesses! The game is over.")                        #ends the game when the user is out of guesses
+      print("You are out of guesses! The game is over.")
       cat("The correct answer was:",computer_sample)
     }
     
@@ -100,6 +118,7 @@ bulls_and_cows <- function() {
       break
     }
   }
+  
   
 }
 
